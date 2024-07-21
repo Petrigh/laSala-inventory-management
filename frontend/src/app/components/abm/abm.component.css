@@ -1,0 +1,84 @@
+body {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
+tr th{
+  background-color: #395144;
+  color: #F0EBCE;
+}
+
+.header-container {
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    margin: 0;
+    color: #395144;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .spacer {
+    flex-grow: 1;
+  }
+  
+  .buttonAdd {
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido al extremo derecho */
+    margin-bottom: 7px; /* Espacio entre el botón y la tabla */
+    margin-left: auto;
+    background-color: #8a6a44 !important;
+    border-color: #8a6a44 !important;
+    color: #F0EBCE !important;
+  }
+
+  .tableHover:hover{
+    cursor: pointer;
+  }
+  .tableHover:hover > .tableIcon{
+    color: orange;
+  }
+
+  .tableHover:hover > .eliminarIcon{
+    color: red;
+  }
+
+  .tableIcon{
+    color: #8a6a44;
+  }
+
+  .eliminarIcon{
+    color: #8a6a44;
+  }
+
+.search-box {
+    padding: 8px;
+}
+
+.search-box input {
+    width: 188px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.search-box button {
+    width: 90px;
+}
+
+.search-button {
+    margin-right: 8px;
+    background-color: #8a6a44;
+    border-color: #8a6a44;
+    color: #F0EBCE;
+}
+

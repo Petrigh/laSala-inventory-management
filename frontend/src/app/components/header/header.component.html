@@ -1,0 +1,18 @@
+<header>
+    <img/>
+    <span class="longTitle"> {{title}}</span>
+    <span class="shortTitle"> {{titleShort}}</span>
+    <section>
+        <ng-container *ngIf="!isLoggedIn; else loginButton">
+            <button (click)="ingresar()" nz-button class="login-form-button" [nzType]="'primary'">Ingresar</button>
+        </ng-container>
+        <ng-template #loginButton>
+            <div class="user-name"></div>
+            <button (click)="cerrarSesion()" class="cerrarSesion">
+                <div class="user-image">
+                    <fa-icon [icon]="userIcon"></fa-icon>
+                </div>
+            </button>
+        </ng-template>
+    </section>
+</header>

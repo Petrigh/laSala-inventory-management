@@ -1,0 +1,63 @@
+header{
+    height: 70px;
+    padding: 20px 50px;
+    background-color: #395144;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 5px 5px 5px #A8B1A1;
+    span{
+        font-weight: bold;
+        font-size: 20px;
+        color: white;
+    }
+    .shortTitle{
+        display: none;
+    }
+    @media only screen and (max-width: 1300px){     
+        .longTitle{
+            display: none;
+        }
+        .shortTitle{
+            display:block;
+        }
+    }
+    section{
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        .user-image{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #8a6a44;
+            background-color: #84a486;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .login-form-button {
+            background-color: #8a6a44 !important;
+            border-color: #8a6a44 !important;
+            color: #F0EBCE !important;
+        }
+
+        .login-form-button:hover {
+            background-color: #AA8B56 !important;
+            border-color: #AA8B56 !important;
+        }
+    }
+}
+
+.cerrarSesion{
+  all: unset;
+  cursor: pointer;
+}
+
+fa-icon{
+    color: #8a6a44;
+    font-size: 20px;
+}

@@ -1,0 +1,14 @@
+<body>
+    <span>Bienvenide</span>
+    <article class="loginContainer">
+        <ng-container *ngIf="logged; else loginButton">
+            <span>{{userName}}</span>
+        </ng-container>
+        <ng-template #loginButton>
+                <span>Aun no has ingresado al sistema</span>
+                <button (click)="ingresar()" class="login">
+                    Ingresar
+                </button>
+        </ng-template>
+    </article>
+</body>

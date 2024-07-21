@@ -1,0 +1,20 @@
+main{
+    display: flex;
+    aside{
+        width: 350px;
+        min-width: 230px;
+        min-height: calc(100vh - 70px);
+        background-color: #bdd2c4;
+        color: #395144;
+        box-shadow: 5px 5px 5px #A8B1A1;
+        @media only screen and (max-width: 1300px) {
+            width: 100px;
+            min-width: 100px;
+        }
+    }
+    body{
+        padding: 30px;
+        height: 92vh;
+        background-color: transparent;
+    }
+}

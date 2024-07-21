@@ -1,0 +1,39 @@
+<body>
+  <app-abm
+    [importedData]="listRecetas"
+    title="Recetas"
+    buttonAddText="Añadir Receta"
+    (addTrigger)="showModal()"
+    [isEditable]="true"
+  >
+  </app-abm>
+</body>
+
+
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="Agregar una receta"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading">
+    <form *nzModalContent nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="14">Nombre: </nz-form-label>
+        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Por favor ingrese el titulo de la receta">
+          <input nz-input formControlName="fieldA" placeholder="Titulo de la receta" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="14">Procedimiento: </nz-form-label>
+        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Por favor ingrese la descripcion del procedimiento">
+          <textarea rows="10" style="resize: none;" nz-input formControlName="fieldB" placeholder="Describa el procedimiento de la receta"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="14">Ingredientes: </nz-form-label>
+        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Por favor ingrese los ingredientes utilizados">
+          <textarea rows="10" style="resize: none;" nz-input formControlName="fieldC" placeholder="Detalle los ingredientes"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>

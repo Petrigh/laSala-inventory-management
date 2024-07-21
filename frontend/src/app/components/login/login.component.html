@@ -1,0 +1,42 @@
+<body>
+  <article>
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <h1>Bienvenide!</h1>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Ingrese su usuario!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="userName" placeholder="Usuario" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Ingrese su contraseña!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="Contraseña" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="remember">
+            <span>Recordarme</span>
+          </label>
+        </div>
+      </div>
+      <nz-form-item>
+        <nz-form-control
+          nzErrorTip="Usuario o Contraseña invalido"
+          [nzValidateStatus]="userValidated"
+          class="centeredItem"
+        >
+          <button nz-button class="login-form-button login-form-margin" [disabled]="disableIngresar" [nzType]="'primary'">Ingresar</button>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div class="links">
+        <a>Registrate ahora!</a>
+        <a class="login-form-forgot">Olvide mi contraseña</a>
+      </div>
+    </form>
+  </article>
+</body>

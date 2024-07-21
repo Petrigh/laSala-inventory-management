@@ -1,0 +1,32 @@
+ul{
+    padding-top: 40px;
+    li{
+        padding: 25px 45px;
+        cursor: pointer;
+        @media only screen and (max-width: 1300px) {
+            padding: 25px 35px;            
+        }
+        &:hover {
+            background-color: #82a68e;
+            border-right: 10px solid #395144;
+        }
+        fa-icon{
+            margin-right: 20px;
+            font-size: 22px;
+        }
+        span {
+            font-size: larger;
+            display: inline;
+            @media only screen and (max-width: 1300px){
+                display: none;                
+            }
+        }
+    }
+    .subLi{
+        background-color: #a4b6a8;
+        padding-left: 60px;
+        @media only screen and (max-width: 1300px) {
+            padding-left: 45px;            
+        }
+    }
+}

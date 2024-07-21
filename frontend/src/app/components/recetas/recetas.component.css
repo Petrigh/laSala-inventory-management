@@ -1,0 +1,31 @@
+body {
+  background-color: #bdd2c4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 20px; /* Añadido padding al body */
+}
+
+/* CSS del formulario del modal */
+nz-modal {
+  width: 80vw !important;
+  max-width: 1000px !important;
+}
+
+nz-modal .ant-modal-body {
+  padding: 24px 32px;
+}
+
+nz-form-item {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+nz-form-control {
+  width: 100%;
+}
+
+input[nz-input], textarea[nz-input] {
+  width: 100%;
+}
