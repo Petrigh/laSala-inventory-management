@@ -2,11 +2,9 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
+    "init": "sudo service mariadb stop && sudo docker start laSala",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "docker": "sudo docker exec -it laSala bash"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +21,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "jwt-decode": "^4.0.0",
     "ng-zorro-antd": "^17.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

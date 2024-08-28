@@ -4,29 +4,29 @@
             <fa-icon [icon]="recetasIcon"></fa-icon>
             <span>Recetas</span>
         </li>
-        <li *ngIf="isAdmin" nzTooltipColor="#395144" nzTooltipTitle="Ventas" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/ventas')">
-            <fa-icon [icon]="ventasIcon"></fa-icon>
-            <span>Ventas</span>
-        </li>
-        <li class="stock" (click)="toggleStock()">
+        <li class="stock" (click)="toggleButton(0)">
             <fa-icon [icon]="stockIcon"></fa-icon>
             <span>Stock</span>
         </li>
-        <li class="subLi" *ngIf="showStockList" nzTooltipColor="#395144" nzTooltipTitle="Insumos" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/insumos')">
-            <fa-icon [icon]="insumosIcon"></fa-icon>
-            <span>Insumos</span>
+            <li class="subLi" *ngIf="this.toggles[0]" nzTooltipColor="#395144" nzTooltipTitle="Insumos" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/insumos')">
+                <fa-icon [icon]="insumosIcon"></fa-icon>
+                <span>Insumos</span>
+            </li>
+            <li class="subLi" *ngIf="this.toggles[0]" nzTooltipColor="#395144" nzTooltipTitle="Limpieza" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/limpieza')">
+                <fa-icon [icon]="limpiezaIcon"></fa-icon>
+                <span>Limpieza</span>
+            </li>
+            <li class="subLi" *ngIf="this.toggles[0]" nzTooltipColor="#395144" nzTooltipTitle="Productos" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/productos')">
+                <fa-icon [icon]="productosIcon"></fa-icon>
+                <span>Productos</span>
+            </li>
+        <li nzTooltipColor="#395144" nzTooltipTitle="Familias Productoras" nzTooltipPlacement="right" nz-tooltip (click)="navigate('/familias')">
+            <fa-icon [icon]="familiaIcon"></fa-icon>
+            <span>Familias Productoras</span>
         </li>
-        <li class="subLi" *ngIf="showStockList" nzTooltipColor="#395144" nzTooltipTitle="Limpieza" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/limpieza')">
-            <fa-icon [icon]="limpiezaIcon"></fa-icon>
-            <span>Limpieza</span>
-        </li>
-        <li class="subLi" *ngIf="showStockList" nzTooltipColor="#395144" nzTooltipTitle="Productos" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/productos')">
-            <fa-icon [icon]="productosIcon"></fa-icon>
-            <span>Productos</span>
-        </li>
-        <li nzTooltipColor="#395144" nzTooltipTitle="Actividades" nzTooltipPlacement="right" nz-tooltip  (click)="navigate('/actividades')">
-            <fa-icon [icon]="actividadesIcon"></fa-icon>
-            <span>Actividades</span>
+        <li nzTooltipColor="#395144" nzTooltipTitle="Canales de Venta" nzTooltipPlacement="right" nz-tooltip (click)="navigate('/canales')">
+            <fa-icon [icon]="canalIcon"></fa-icon>
+            <span>Canales de Venta</span>
         </li>
         <li *ngIf="isAdmin" nzTooltipColor="#395144" nzTooltipTitle="Colaboradorxs" nzTooltipPlacement="right" nz-tooltip (click)="navigate('/colaboradorxs')">
             <fa-icon [icon]="colaboradorxsIcon"></fa-icon>

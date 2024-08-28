@@ -1,0 +1,95 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <article class="recepieGrid">
+        <main class="data">
+            <nz-form-item class="form-item">
+                <div>
+                    <nz-form-label nzFor="nombre" nzRequired class="form-label">Nombre</nz-form-label>
+                    <nz-form-control nzErrorTip="Ingrese un nombre" class="form-control">
+                        <input nz-input formControlName="nombre" id="nombre" />
+                    </nz-form-control>
+                </div>
+            </nz-form-item>
+        
+            <section class="row">
+                <nz-form-item class="form-item">
+                    <nz-form-label nzFor="producto" nzRequired>Producto</nz-form-label>
+                    <nz-form-control nzErrorTip="Producto es requerido">
+                        <nz-select class="select" formControlName="producto" id="producto" [nzDropdownRender]="productoMenu" nzPlaceHolder="Seleccione un Producto">
+                            <nz-option *ngFor="let prod of productos" [nzValue]="prod.id" [nzLabel]="prod.bien.nombre"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+        
+                <nz-form-item class="form-item">
+                    <div>
+                        <nz-form-label nzFor="cantidadProd" nzRequired class="form-label">Cantidad</nz-form-label>
+                        <nz-form-control nzErrorTip="Ingrese una cantidad" class="form-control">
+                            <input nz-input formControlName="cantidadProd" id="cantidadProd" />
+                        </nz-form-control>
+                    </div>
+                </nz-form-item>
+            </section>
+
+            <nz-table formArrayName="ingredientes" #ingredientesTable [nzData]="ingReceta" [nzPageSize]="2">
+                <thead>
+                  <tr>
+                    <th nzWidth="auto">INGREDIENTE
+                        <nz-filter-trigger [(nzVisible)]="visible" [nzDropdownMenu]="menu">
+                          <fa-icon class="buscarIcon" [icon]="buscarIcon"></fa-icon>
+                        </nz-filter-trigger></th>
+                    <th nzWidth="auto">CANTIDAD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of ingredientesControls.controls; let i = index" [formGroupName]="i">
+                    <td>
+                        <div style="display: grid; grid-template: 16px / auto 12px;">
+                            {{ item.get('nombre')?.value }}
+                            <fa-icon class="eliminarIcon" [icon]="eliminarIcon" (click)="deleteItem(item.get('id')?.value)"></fa-icon>
+                        </div>
+                    </td>
+                    <td>
+                        <nz-form-control nzErrorTip="Debe ser mayor a 0">
+                            <input nz-input type="number" formControlName="cantidad"/>
+                        </nz-form-control>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+        
+        </main>
+        <aside class="description">
+            <nz-form-control nzErrorTip="Ingrese una descripcion">
+                <nz-form-label nzFor="descripcion" nzRequired class="form-label">Descripcion</nz-form-label>
+                <textarea formControlName="descripcion" id="descripcion"></textarea>
+            </nz-form-control>
+        </aside>
+    </article>
+
+
+</form>
+
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-select class="select" id="ingredientes" 
+        nzPlaceHolder="Buscar Ingrediente"
+        [(ngModel)]="selectedValue"
+        (ngModelChange)="addItem($event)"
+        >
+            <nz-option *ngFor="let ing of ingredientes" [nzValue]="ing.id" [nzLabel]="ing.bien.nombre"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+  <ng-template #productoMenu>
+    <nz-divider></nz-divider>
+    <div style="align-items: center; display: flex; flex-direction: column;">
+      <input type="text" nz-input #inputElement placeholder="Producto Nuevo"/>
+      <button class="add-item" (click)="addProduct(inputElement)">
+        Agregar producto
+      </button>
+    </div>
+  </ng-template>

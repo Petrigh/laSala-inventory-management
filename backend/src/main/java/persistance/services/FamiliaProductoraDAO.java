@@ -3,8 +3,8 @@ package persistance.services;
 import models.FamiliaProductora;
 import persistance.interfaces.IFamiliaProductora;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 
 import org.jvnet.hk2.annotations.Service;
 
@@ -17,7 +17,19 @@ public class FamiliaProductoraDAO implements IFamiliaProductora {
 
     @Override
     public FamiliaProductora create(FamiliaProductora model) {
-        entityManager.persist(model);
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+            entityManager.persist(model);
+            entityManager.flush();
+            entityManager.refresh(model);
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
         return model;
     }
 
@@ -28,20 +40,41 @@ public class FamiliaProductoraDAO implements IFamiliaProductora {
 
     @Override
     public List<FamiliaProductora> getAll() {
-        return entityManager.createQuery("SELECT m FROM FamiliaProductora m", FamiliaProductora.class).getResultList();
+        return entityManager.createQuery("FROM FamiliaProductora").getResultList();
     }
 
     @Override
     public FamiliaProductora update(FamiliaProductora model) {
-        return entityManager.merge(model);
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+    		model = entityManager.merge(model);
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
+        return model;
     }
 
     @Override
     public void delete(Long id) {
-        FamiliaProductora model = getById(id);
-        if (model != null) {
-            entityManager.remove(model);
-        }
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+            FamiliaProductora model = getById(id);
+            if (model != null) {
+                entityManager.remove(model);
+            }
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
     }
 }
 

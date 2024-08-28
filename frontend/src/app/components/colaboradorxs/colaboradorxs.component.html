@@ -1,18 +1,62 @@
 <body>
-    <app-abm
-      [importedData]="listColab"
-      title="Usuarios"
-      buttonAddText="Añadir Usuario"
-      [isEditable]="true"
-      [pageSize]="3"
-    >
-    </app-abm>
+  <div class="header-container">
+    <h1 class="title">Usuarios</h1>
+    <div class="spacer"></div>
+    <button class="buttonAdd" nz-button (click)="showModal(undefined)" *ngIf="isAdmin">
+      <fa-icon [icon]="addIcon"></fa-icon>
+      Añadir Usuario
+    </button>
+  </div>
 
-    <app-abm
-      [importedData]="listHistorial"
-      title="Historial"
-      [pageSize]="3"
-    >
-    </app-abm>
-  </body>
-  
+    <nz-table #tablaUsuario [nzData]="datosTabla" [nzPageSize]="7" [nzScroll]="{ y: '450px' }">
+        <thead>
+          <tr>
+            <th nzWidth="100px">NOMBRE
+              <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                <fa-icon class="buscarIcon" [icon]="buscarIcon"></fa-icon>
+              </nz-filter-trigger>
+            </th>
+            <th nzWidth="100px">USUARIO</th>
+            <th nzWidth="100px">EMAIL</th>
+            <th nzWidth="100px">ROL</th>
+            <th nzWidth="50px">ACTIVO</th>
+            <th nzWidth="50px" *ngIf="isAdmin">EDITAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tablaUsuario.data">
+            <td>
+              {{ item.nombre }}&nbsp;{{ item.apellido }}
+            </td>
+            <td>
+              {{ item.usuario }}
+            </td>
+            <td>
+              {{ item.email }}
+            </td>
+            <td>
+              {{ item.rol }}
+            </td>
+            <td *ngIf="item.active">
+              <fa-icon style="color:#395144; font-size:18px;" [icon]="userActive"></fa-icon>
+            </td>
+            <td *ngIf="!item.active">
+              <fa-icon style="color:red; font-size:18px;" [icon]="userInactive"></fa-icon>
+            </td>
+            <td class="tableHover" *ngIf="isAdmin" (click)="showModal(item)">
+              <fa-icon class="tableIcon" [icon]="editIcon"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div class="ant-table-filter-dropdown">
+          <div class="search-box">
+            <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+            <button nz-button nzSize="small" (click)="search()" class="search-button">Buscar</button>
+            <button nz-button nzSize="small" (click)="reset()">Limpiar</button>
+          </div>
+        </div>
+      </nz-dropdown-menu>
+</body>  

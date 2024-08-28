@@ -8,13 +8,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Bien")
 public class Bien {
-	private enum TipoBien {
+	public enum TipoBien {
 		INSUMO, PRODUCTO, MATERIAPRIMA
 	}
 
 	@Id @GeneratedValue
 	@Column(name="id")
-	private long id;
+	private Long id;
 	
 	@Column(name="nombre", nullable = false)
 	private String nombre;
@@ -39,6 +39,9 @@ public class Bien {
 
 	public void setTipo(TipoBien tipo) {
 		this.tipo = tipo;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

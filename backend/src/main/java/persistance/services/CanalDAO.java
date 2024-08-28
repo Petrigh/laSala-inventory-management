@@ -3,8 +3,8 @@ package persistance.services;
 import models.Canal;
 import persistance.interfaces.ICanal;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 
 import org.jvnet.hk2.annotations.Service;
 
@@ -17,7 +17,19 @@ public class CanalDAO implements ICanal {
 
     @Override
     public Canal create(Canal model) {
-        entityManager.persist(model);
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+            entityManager.persist(model);
+            entityManager.flush();
+            entityManager.refresh(model);
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
         return model;
     }
 
@@ -28,20 +40,41 @@ public class CanalDAO implements ICanal {
 
     @Override
     public List<Canal> getAll() {
-        return entityManager.createQuery("SELECT m FROM Canal m", Canal.class).getResultList();
+        return entityManager.createQuery("FROM Canal").getResultList();
     }
 
     @Override
     public Canal update(Canal model) {
-        return entityManager.merge(model);
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+    		model = entityManager.merge(model);
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
+        return model;
     }
 
     @Override
     public void delete(Long id) {
-        Canal model = getById(id);
-        if (model != null) {
-            entityManager.remove(model);
-        }
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+            Canal model = getById(id);
+            if (model != null) {
+                entityManager.remove(model);
+            }
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
     }
 }
 

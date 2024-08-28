@@ -1,0 +1,1 @@
+import{j as i,n as m}from"./chunk-JBFZACTD.js";import{N as o,ma as r,w as t}from"./chunk-FXUVGPCX.js";var l=(u,c)=>{let p=r(i);return r(m).isAdmin$.pipe(o(1),t(e=>e||(p.navigate(["/welcome"]),!1)))};export{l as a};

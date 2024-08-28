@@ -23,7 +23,11 @@ import io.swagger.v3.oas.annotations.servers.Server;
     servers = {
         @Server(
             url = "http://localhost:8080/backend/rest",
-            description = "Servidor"
+            description = "localhost"
+        ),
+        @Server(
+            url = "https://grupo1.java2024.linti.unlp.edu.ar/rest",
+            description = "Servidor Catedras"
         )
     }
 )

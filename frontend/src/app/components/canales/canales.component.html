@@ -1,0 +1,49 @@
+<body>
+    <div class="header-container">
+      <h1 class="title">Canales de Venta</h1>
+      <div class="spacer"></div>
+      <button class="buttonAdd" nz-button (click)="showModal(undefined)" *ngIf="isAdmin">
+        <fa-icon [icon]="addIcon"></fa-icon>
+        Añadir Canal
+      </button>
+    </div>
+  
+      <nz-table #tablaFamilias [nzData]="datosTabla" [nzPageSize]="7" style="width: 100%;">
+          <thead>
+            <tr>
+
+              <th nzWidth="auto">NOMBRE
+                <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                  <fa-icon class="buscarIcon" [icon]="buscarIcon"></fa-icon>
+                </nz-filter-trigger>
+              </th>
+              <th nzWidth="auto">DIRECCION</th>
+              <th nzWidth="auto" *ngIf="isAdmin">EDITAR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tablaFamilias.data">
+              <td>
+                {{ item.nombre }}
+              </td>
+              <td>
+                <span *ngIf="tipoCheck(item.tipo) == 1">{{ item.direccion }}</span>
+                <a *ngIf="tipoCheck(item.tipo) == 0" [href]="getFullUrl(item.direccion)" target="_blank">{{ item.direccion }}</a>
+              </td>
+              <td class="tableHover" *ngIf="isAdmin" (click)="showModal(item)">
+                <fa-icon class="tableIcon" [icon]="editIcon"></fa-icon>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+  
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <div class="ant-table-filter-dropdown">
+            <div class="search-box">
+              <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+              <button nz-button nzSize="small" (click)="search()" class="search-button">Buscar</button>
+              <button nz-button nzSize="small" (click)="reset()">Limpiar</button>
+            </div>
+          </div>
+        </nz-dropdown-menu>
+  </body>  

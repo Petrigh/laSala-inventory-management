@@ -12,14 +12,14 @@ public class Canal {
 	public Canal() {
 		super();
 	}
-	private enum Ubicacion {
+	public enum Ubicacion {
 		WEB, FISICO
 	}
 
 
 	@Id @GeneratedValue
 	@Column(name="id")
-	private long id;
+	private Long id;
 	@Column(name="nombre")
 	private String nombre;
 	@Column(name="tipo")

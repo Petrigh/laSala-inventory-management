@@ -8,11 +8,21 @@
         </ng-container>
         <ng-template #loginButton>
             <div class="user-name"></div>
-            <button (click)="cerrarSesion()" class="cerrarSesion">
+            <nz-filter-trigger [(nzVisible)]="visible" [nzDropdownMenu]="menu">
                 <div class="user-image">
                     <fa-icon [icon]="userIcon"></fa-icon>
                 </div>
-            </button>
+            </nz-filter-trigger>
         </ng-template>
     </section>
 </header>
+
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <span *ngIf="userName">{{ userName }}</span>
+        <button nz-button nzSize="small" (click)="cerrarSesion()" class="search-button">Cerrar Sesion</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>

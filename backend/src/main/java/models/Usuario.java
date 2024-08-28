@@ -15,14 +15,10 @@ import java.util.Base64;
 @Entity
 @Table(name="Usuario")
 public class Usuario {
-	public Usuario() {
-		super();
-		this.salt = generateSalt();
-	}
-	private enum Rol {
+	
+	public enum Rol {
 		ADMINISTRADOR, ENCARGADO
 	}
-
 	
 	@Id
     @GeneratedValue
@@ -93,13 +89,8 @@ public class Usuario {
 		return password;
 	}
 
-	public void setPassword(String password) throws NoSuchAlgorithmException{
-        byte[] salt = Base64.getDecoder().decode(this.salt);
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
-        md.update(salt);
-        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-
-		this.password = Base64.getEncoder().encodeToString(hashedPassword);
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Boolean isActive() {
@@ -117,13 +108,30 @@ public class Usuario {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-	
-	public String generateSalt() {
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+    
+	public void generateSalt() {
 		SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[7];
         secureRandom.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt);
+        this.salt = Base64.getEncoder().encodeToString(salt);
     }
+	
+	public void encodePassword() throws NoSuchAlgorithmException{
+        byte[] salt = Base64.getDecoder().decode(this.salt);
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        md.update(salt);
+        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
+		this.password = Base64.getEncoder().encodeToString(hashedPassword);
+	}
 	
 	public boolean checkPassword(String enteredPassword) throws NoSuchAlgorithmException{
         byte[] salt = Base64.getDecoder().decode(this.salt);
@@ -132,6 +140,5 @@ public class Usuario {
         byte[] hashedPassword = md.digest(enteredPassword.getBytes(StandardCharsets.UTF_8));
 
         return Base64.getEncoder().encodeToString(hashedPassword).equals(this.password);
-		
 	}
 }

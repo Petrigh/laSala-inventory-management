@@ -1,0 +1,28 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item class="form-item">
+        <div>
+            <nz-form-label nzFor="nombre" nzRequired class="form-label">Nombre</nz-form-label>
+            <nz-form-control nzErrorTip="Ingrese un nombre" class="form-control">
+                <input nz-input formControlName="nombre" id="nombre" />
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+
+    <nz-form-item class="form-item">
+        <div>
+            <nz-form-label nzFor="direccion" nzRequired class="form-label">Direccion</nz-form-label>
+            <nz-form-control nzErrorTip="Ingrese un direccion" class="form-control">
+                <input nz-input formControlName="direccion" id="direccion" />
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+
+    <nz-form-item class="form-item">
+        <nz-form-label nzFor="tipo" nzRequired>Ubicacion</nz-form-label>
+        <nz-form-control nzErrorTip="Ubicacion es requerida">
+            <nz-select class="rolSelect" formControlName="tipo" id="tipo">
+                <nz-option *ngFor="let rol of tipos" [nzValue]="rol" [nzLabel]="rol"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+</form>

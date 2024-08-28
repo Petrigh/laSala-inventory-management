@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Orden {
 	@Id @GeneratedValue
 	@Column(name="id")
-	private int id;
+	private Long id;
 	
 	@Column(name="fecha")
 	private Date fecha;
@@ -27,7 +27,7 @@ public class Orden {
 	
 	@OneToMany
 	@JoinColumn(name="idMercaderia")
-	private List<Item> mercaderias;
+	private List<Ingrediente> mercaderias;
 	
 	@ManyToOne
 	@JoinColumn(name="idUsuario")
@@ -54,11 +54,11 @@ public class Orden {
 		this.total = total;
 	}
 
-	public List<Item> getMercaderias() {
+	public List<Ingrediente> getMercaderias() {
 		return mercaderias;
 	}
 
-	public void setMercaderias(List<Item> mercaderias) {
+	public void setMercaderias(List<Ingrediente> mercaderias) {
 		this.mercaderias = mercaderias;
 	}
 
@@ -70,7 +70,7 @@ public class Orden {
 		this.comerciante = comerciante;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 

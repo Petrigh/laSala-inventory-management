@@ -3,6 +3,7 @@ package persistance.services;
 import models.Orden;
 import persistance.interfaces.IOrden;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
@@ -17,7 +18,19 @@ public class OrdenDAO implements IOrden {
 
     @Override
     public Orden create(Orden model) {
-        entityManager.persist(model);
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+            entityManager.persist(model);
+            entityManager.flush();
+            entityManager.refresh(model);
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
         return model;
     }
 
@@ -28,20 +41,41 @@ public class OrdenDAO implements IOrden {
 
     @Override
     public List<Orden> getAll() {
-        return entityManager.createQuery("SELECT m FROM Orden m", Orden.class).getResultList();
+        return entityManager.createQuery("FROM Orden").getResultList();
     }
 
     @Override
     public Orden update(Orden model) {
-        return entityManager.merge(model);
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+    		model = entityManager.merge(model);
+            trans.commit();
+    	}catch(Exception e) {
+    		if(trans != null) {
+    			trans.rollback();
+    		}
+    	}
+        return model;
     }
 
     @Override
     public void delete(Long id) {
-        Orden model = getById(id);
-        if (model != null) {
-            entityManager.remove(model);
-        }
+    	EntityTransaction trans = null;
+    	try {
+    		trans = entityManager.getTransaction();
+    		trans.begin();
+	        Orden model = getById(id);
+	        if (model != null) {
+	            entityManager.remove(model);
+	        }
+	        trans.commit();
+		}catch(Exception e) {
+			if(trans != null) {
+				trans.rollback();
+			}
+		}
     }
 }
 

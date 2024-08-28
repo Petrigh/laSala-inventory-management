@@ -1,0 +1,10 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item class="form-item">
+        <div>
+            <nz-form-label nzFor="nombre" nzRequired class="form-label">Nombre</nz-form-label>
+            <nz-form-control nzErrorTip="Ingrese un nombre" class="form-control">
+                <input nz-input formControlName="nombre" id="nombre" />
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+</form>

@@ -1,0 +1,26 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item class="form-item">
+        <div>
+            <nz-form-label nzFor="nombre" nzRequired class="form-label">Nombre</nz-form-label>
+            <nz-form-control nzErrorTip="Ingrese un nombre" class="form-control">
+                <input nz-input formControlName="nombre" id="nombre" />
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+    <nz-form-item class="form-item">
+        <div>
+            <nz-form-label nzFor="cantidad" nzRequired class="form-label">Cantidad</nz-form-label>
+            <nz-form-control nzErrorTip="Ingrese una cantidad" class="form-control">
+                <input nz-input formControlName="cantidad" id="cantidad" />
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+    <nz-form-item class="form-item">
+        <div>
+            <nz-form-label nzFor="precioUnitario" nzRequired class="form-label">Precio</nz-form-label>
+            <nz-form-control nzErrorTip="Ingrese un precio" class="form-control">
+                <input nz-input formControlName="precioUnitario" id="precioUnitario" />
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+</form>

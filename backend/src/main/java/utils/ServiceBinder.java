@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import persistance.services.*;
 import persistance.interfaces.*;
+import persistance.beans.*;
 
 public class ServiceBinder extends AbstractBinder {
     @Override
@@ -19,6 +20,7 @@ public class ServiceBinder extends AbstractBinder {
         bind(OrdenDAO.class).to(IOrden.class);
         bind(RecetaDAO.class).to(IReceta.class);
         bind(UsuarioDAO.class).to(IUsuario.class);
+        bind(ConfigJWT.class).to(IKeyManager.class);
     }
 }
 

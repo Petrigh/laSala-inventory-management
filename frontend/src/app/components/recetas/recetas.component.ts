@@ -1,85 +1,179 @@
-import { Component, OnInit, NgModule } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzFormLayoutType, NzFormModule } from 'ng-zorro-antd/form';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { Receta } from './models/recetas';
+import { NgIf, NgFor, CommonModule } from '@angular/common';
+import { Component, ViewContainerRef } from '@angular/core';
+import { FormArray, FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faPlus, faSearch, faPencil, faCarrot } from '@fortawesome/free-solid-svg-icons';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { ModalButtonOptions, NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { RecipeService } from './services/recipe.service';
-import { AbmComponent } from '../abm/abm.component';
+import { UserService } from '../../services/user.service';
+import { Receta } from './models/recetas';
+import { FormRecetaComponent } from './components/form-receta/form-receta.component';
+import { lastValueFrom } from 'rxjs';
+import { DetalleRecetaComponent } from './components/detalle-receta/detalle-receta.component';
 
 @Component({
   selector: 'app-recetas',
   standalone: true,
   imports: [
-    NzModalModule,
-    AbmComponent,
-    NzFormModule,
+    NgIf, NgFor,
+    CommonModule,
     FormsModule,
-    ReactiveFormsModule,
+    NzTableModule,
+    NzModalModule,
+    NzDropdownMenuComponent,
+    NzButtonModule,
+    FontAwesomeModule
   ],
   templateUrl: './recetas.component.html',
   styleUrl: './recetas.component.css'
 })
-export class RecetasComponent implements OnInit{
+export class RecetasComponent{
+  cookIcon = faCarrot;
+  addIcon = faPlus;
+  buscarIcon = faSearch;
+  editIcon = faPencil;
 
-  listRecetas: Receta[] = [];
+  recipes: Receta[] = [];
+  datosTabla: Receta[] = [];
+  isAdmin: boolean = false;
 
-  isVisible = false;
-  isOkLoading = false;
-
-  validateForm: FormGroup<{
-    formLayout: FormControl<NzFormLayoutType>;
-    fieldA: FormControl<string>;
-    filedB: FormControl<string>;
-  }> = this.fb.group({
-    formLayout: 'horizontal' as NzFormLayoutType,
-    fieldA: ['', [Validators.required]],
-    filedB: ['', [Validators.required]]
-  });
-
-
+  searchValue = '';
+  visible = false;
 
   constructor(
-    private recetasService: RecipeService,
-    private fb: NonNullableFormBuilder
+    private recetaService: RecipeService,
+    private userService: UserService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef
   ){}
 
+
   ngOnInit(): void {
-    this.recetasService.getRecetasMock().subscribe(
+    this.userService.isAdmin$.subscribe(
+      (admin) => {
+        this.isAdmin = admin;
+      }
+    );
+    this.recetaService.getRecetas().subscribe(
       (recetas)=> {
-        this.listRecetas = recetas;
+        this.recipes = recetas;
+        this.datosTabla = recetas;
       }
     );
   }
 
-  showModal(){
-    this.isVisible = true;
+  reset(): void {
+    this.searchValue = '';
+    this.search();
   }
 
-  handleOk(): void {
-    this.isOkLoading = true;
-    if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
-    } else {
-      Object.values(this.validateForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
+  search(): void {
+    this.visible = false;
+    this.datosTabla = this.recipes.filter((item: Receta) => (item.nombre.toLocaleUpperCase().indexOf(this.searchValue.toLocaleUpperCase()) !== -1));
+  }
+
+
+
+  showReceta(item: Receta){
+    const modalRef: NzModalRef = this.modal.create<DetalleRecetaComponent, Receta>({
+      nzTitle: item.nombre,
+      nzContent: DetalleRecetaComponent,
+      nzData: item,
+      nzViewContainerRef: this.viewContainerRef,
+      nzCentered: true,
+      nzWidth: 750,
+      nzFooter: []
+    });
+    modalRef.componentInstance.patch(item);
+  }
+  
+  async onDelete(receta: number | null, modalRef: NzModalRef){
+    if(!receta){
+      return
     }
-    setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
-    }, 3000);
+    await lastValueFrom(
+      this.recetaService.deleteReceta(receta)
+    );
+    modalRef.close();
+    this.recipes = await lastValueFrom(this.recetaService.getRecetas());
+    this.datosTabla = this.recipes;
+  }
+  
+  async onSubmit(edit: boolean, modal: FormRecetaComponent, modalRef: NzModalRef)
+  {
+    try {
+      if (modal.validateForm.valid) {
+        await lastValueFrom(
+          this.recetaService.updateRecetas(modal.submitForm(), edit)
+        );
+        modalRef.close();
+        this.recipes = await lastValueFrom(this.recetaService.getRecetas());
+        this.datosTabla = this.recipes;
+      }else{ 
+        for (const i in modal.validateForm.controls) {
+          if (modal.validateForm.controls.hasOwnProperty(i)) {
+            modal.validateForm.controls[i].markAsDirty();
+            modal.validateForm.controls[i].updateValueAndValidity();
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Error updating familias', err);
+    }
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
-  }
+  showModal(item: Receta | undefined): void {
+    const footer: Array<ModalButtonOptions<FormRecetaComponent>> = [
+      {
+        label: 'Cancelar',
+        type: 'text',
+        danger: false,
+        onClick: () => modalRef.destroy(),
+      },
+      {
+        label: item? 'Editar' : 'Cargar',
+        type: 'primary',
+        danger: false,
+        onClick: async () => {
+          this.modal.confirm({ 
+            nzCentered: true,
+            nzTitle: 'Confirmar '+(item?'edicion?':'guardado?'), 
+            nzOnOk: ()=> this.onSubmit(!!item,modalRef.getContentComponent() as FormRecetaComponent, modalRef),
+            nzOkText: item?"Editar":"Guardar",
+            nzCancelText:"Cancelar"
+          })
+        }
+      }
+    ]
 
-  /* Eventos del formulario */
-  get isHorizontal(): boolean {
-    return this.validateForm.controls.formLayout.value === 'horizontal';
+    if(item)
+      footer.push({
+        label: 'Eliminar',
+        type: 'primary',
+        danger: true,
+        onClick: async () => {
+          this.modal.warning({ 
+            nzCentered: true,
+            nzTitle: 'Eliminar Receta?', 
+            nzOnOk: ()=> this.onDelete(item.id, modalRef),
+            nzOkText: 'Eliminar',
+            nzCancelText:"Cancelar"
+          })
+        }
+                
+      })
+    const modalRef: NzModalRef = this.modal.create<FormRecetaComponent, Receta | undefined>({
+      nzTitle: item? 'Editar Receta' : 'Cargar Receta',
+      nzContent: FormRecetaComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzCentered: true,
+      nzWidth: 750,
+      nzFooter:footer
+    })
+    if(item)
+      modalRef.componentInstance.patchFormValues(item);
   }
-
 }

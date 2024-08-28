@@ -1,6 +1,7 @@
 package resourcesRest;
 
 import models.Almacenamiento;
+import models.BienFront;
 import persistance.interfaces.IAlmacenamiento;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -48,11 +49,41 @@ public class AlmacenamientoResource {
         return Response.ok(updated).build();
     }
 
+    @POST
+    @Path("/stock")
+    public Response createStock(BienFront model) {
+    	BienFront created = service.createProducto(model);
+        return Response.status(Response.Status.CREATED).entity(created).build();
+    }
+
+    @PUT
+    @Path("/stock")
+    public Response updateStock(BienFront model) {
+        service.updateProducto(model);
+        return Response.ok().build();
+    }
+
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/insumos")
+    public List<BienFront> getInsumos() {
+        return service.getInsumos();
+    }
+    @GET
+    @Path("/productos")
+    public List<BienFront> getProductos() {
+        return service.getProductos();
+    }
+    @GET
+    @Path("/materiaPrima")
+    public List<BienFront> getMatPrim() {
+        return service.getMatPrim();
     }
 }
 

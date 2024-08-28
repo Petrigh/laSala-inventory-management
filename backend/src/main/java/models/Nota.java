@@ -54,7 +54,7 @@ public class Nota {
 	}
 	@Id @GeneratedValue
 	@Column(name="id")
-	private long id;
+	private Long id;
 	
 	@Column(name="fecha")
 	private Date fecha;

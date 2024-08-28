@@ -1,0 +1,88 @@
+.form-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items:start;
+}
+
+.recepieGrid{
+    display: grid;
+    grid-template: auto / auto auto;
+    column-gap: 15px;
+}
+
+.row{
+    display: grid;
+    grid-template: 100px / 200px 150px;
+}
+
+.select{
+    min-width: 180px;
+}
+
+.description{
+    height: 100%;
+}
+
+textarea{
+    resize: none;
+    height: 200px;
+    width: 100%;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.description textarea {
+    height: 350px; 
+    width: 100%;
+}
+  
+tr th{
+    background-color: #395144;
+    color: #F0EBCE;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+
+  tr td{
+    text-align: center;
+    border-right: 1px solid #f1ecec;
+  }
+  
+  tr td:last-child{
+    border-right: none;
+  }
+  
+
+  .buscarIcon{
+    color: #8a6a44;
+    font-size: 16px;
+  }
+  
+  .buscarIcon:hover{
+    color:orange
+  }
+
+  .eliminarIcon{
+    color: #8a6a44;
+    font-size: 16px;
+  }
+
+  .eliminarIcon:hover{
+    color: red;
+    cursor: pointer;
+  }
+
+  .add-item {
+    all: unset;
+    background-color: #8a6a44;
+    border-color: #8a6a44;
+    color: #F0EBCE;
+    margin-top: 3px;
+    padding: 3px;
+  }

@@ -4,12 +4,11 @@ import models.Usuario;
 import persistance.interfaces.IUsuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.jvnet.hk2.annotations.Service;
-
-import jakarta.inject.Inject;
 
 import java.util.List;
 
@@ -21,10 +20,14 @@ public class UsuarioDAO implements IUsuario {
     @Override
     public Usuario create(Usuario model) {
     	EntityTransaction trans = null;
+    	model.generateSalt();
     	try {
+        	model.encodePassword();
     		trans = entityManager.getTransaction();
     		trans.begin();
             entityManager.persist(model);
+            entityManager.flush();
+            entityManager.refresh(model);
             trans.commit();
     	}catch(Exception e) {
     		if(trans != null) {
@@ -47,10 +50,14 @@ public class UsuarioDAO implements IUsuario {
     @Override
     public Usuario update(Usuario model) {
     	EntityTransaction trans = null;
+    	Usuario dbUser = getById(model.getId());
     	try {
+        	if(!model.getPassword().equals(dbUser.getPassword())){
+        		model.encodePassword();
+        	}
     		trans = entityManager.getTransaction();
     		trans.begin();
-    		entityManager.merge(model);
+    		model = entityManager.merge(model);
             trans.commit();
     	}catch(Exception e) {
     		if(trans != null) {
@@ -62,20 +69,27 @@ public class UsuarioDAO implements IUsuario {
 
     @Override
     public void delete(Long id) {
-    	EntityTransaction trans = null;
-    	try {
-    		trans = entityManager.getTransaction();
-    		trans.begin();
-            Usuario model = getById(id);
-            if (model != null) {
-                entityManager.remove(model);
-            }
-            trans.commit();
-    	}catch(Exception e) {
-    		if(trans != null) {
-    			trans.rollback();
-    		}
-    	}
+    	Usuario usr = this.getById(id);
+    	usr.setActive(false);
+    	this.update(usr);
     }
+    
+    @Override
+    public void activate(Long id) {
+    	Usuario usr = this.getById(id);
+    	usr.setActive(true);
+    	this.update(usr);
+    }
+
+	@Override
+	public Usuario getByUsuario(String usuario) {
+		String jpql = "SELECT u FROM Usuario u WHERE u.usuario = :usuario";
+        TypedQuery<Usuario> query = entityManager.createQuery(jpql, Usuario.class);
+        query.setParameter("usuario", usuario);try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+	}
 }
 

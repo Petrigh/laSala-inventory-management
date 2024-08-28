@@ -5,6 +5,8 @@ import { UserService } from '../../services/user.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @Component({
@@ -13,6 +15,8 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
   imports: [
     NgIf, 
     NzButtonModule,
+    NzDropdownMenuComponent,
+    NzTableModule,
     FontAwesomeModule
   ],
   templateUrl: './header.component.html',
@@ -23,6 +27,8 @@ export class HeaderComponent implements OnInit {
   titleShort = "Sala Comunitaria"
   userIcon = faUser;
   isLoggedIn: boolean = false;
+  userName: string | null | undefined;
+  visible = false;
 
   constructor(
     private userService: UserService,
@@ -33,6 +39,8 @@ export class HeaderComponent implements OnInit {
     this.userService.isLoggedIn$.subscribe(
       (loggedIn) => {
         this.isLoggedIn = loggedIn;
+        this.userName = this.userService.getUsername();
+        this.visible = false;
       }
     );
   }

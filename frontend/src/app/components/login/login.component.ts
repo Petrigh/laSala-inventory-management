@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   credentials: Credentials | undefined;
   userValidated: string = "";
+  errorMessage: string = "";
   disableIngresar: boolean = false;
 
   validateForm: FormGroup<{
@@ -58,17 +59,18 @@ export class LoginComponent implements OnInit {
     this.disableIngresar = true;
     if (this.validateForm.valid) {
       this.credentials = new Credentials({
-        username: this.validateForm.get("userName")?.value,
+        usuario: this.validateForm.get("userName")?.value,
         password: this.validateForm.get("password")?.value,
       });
-      this.userService.loginMock(this.credentials, this.validateForm.get("remember")?.value).subscribe(
+      this.userService.login(this.credentials).subscribe(
         (response) => {
-          if (response.success) {
-            this.router.navigate(['/welcome']);
-          }else{
-            this.userValidated = "error"
-            this.disableIngresar = false;
-          }
+          this.router.navigate(['/welcome']);
+          this.disableIngresar = false;
+        },
+        (error) => {
+          this.userValidated = "error"
+          this.errorMessage = error.message;
+          this.disableIngresar = false;
         }
       );
     } else {

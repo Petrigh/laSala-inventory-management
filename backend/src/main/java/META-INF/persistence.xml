@@ -5,19 +5,22 @@
 		<class>models.Bien</class>
 		<class>models.Canal</class>
 		<class>models.FamiliaProductora</class>
-		<class>models.Item</class>
+		<class>models.Ingrediente</class>
 		<class>models.Nota</class>
 		<class>models.Orden</class>
 		<class>models.Receta</class>
 		<class>models.Usuario</class>
 		<properties>
 		    <property name="hibernate.hbm2ddl.auto" value="update"/>
-		    <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-		    <property name="hibernate.connection.password" value="jyaa2024_pwd01"/>
-		    <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/laSala"/>
-		    <property name="hibernate.connection.username" value="root"/>
+		    <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+		    <property name="hibernate.connection.password" value="jyaa2024_pwd1"/>
+		    <property name="hibernate.connection.url" value="jdbc:mysql://java-db:3306/jyaa2024_grupo1"/>
+		    <property name="hibernate.connection.username" value="jyaa2024_usr1"/>
 		    <property name="hibernate.default_schema" value="stock"/>
 		    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+		    <property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.use_sql_comments" value="true"/>					    
 		</properties>
 	</persistence-unit>
 </persistence>

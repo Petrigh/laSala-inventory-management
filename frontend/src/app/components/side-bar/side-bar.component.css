@@ -3,6 +3,7 @@ ul{
     li{
         padding: 25px 45px;
         cursor: pointer;
+        text-wrap: nowrap;
         @media only screen and (max-width: 1300px) {
             padding: 25px 35px;            
         }

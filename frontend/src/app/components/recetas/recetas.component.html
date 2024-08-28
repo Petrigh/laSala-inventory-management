@@ -1,39 +1,49 @@
 <body>
-  <app-abm
-    [importedData]="listRecetas"
-    title="Recetas"
-    buttonAddText="Añadir Receta"
-    (addTrigger)="showModal()"
-    [isEditable]="true"
-  >
-  </app-abm>
-</body>
-
-
-  <nz-modal
-    [(nzVisible)]="isVisible"
-    nzTitle="Agregar una receta"
-    (nzOnCancel)="handleCancel()"
-    (nzOnOk)="handleOk()"
-    [nzOkLoading]="isOkLoading">
-    <form *nzModalContent nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="handleOk()">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="14">Nombre: </nz-form-label>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Por favor ingrese el titulo de la receta">
-          <input nz-input formControlName="fieldA" placeholder="Titulo de la receta" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="14">Procedimiento: </nz-form-label>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Por favor ingrese la descripcion del procedimiento">
-          <textarea rows="10" style="resize: none;" nz-input formControlName="fieldB" placeholder="Describa el procedimiento de la receta"></textarea>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="14">Ingredientes: </nz-form-label>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Por favor ingrese los ingredientes utilizados">
-          <textarea rows="10" style="resize: none;" nz-input formControlName="fieldC" placeholder="Detalle los ingredientes"></textarea>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </nz-modal>
+    <div class="header-container">
+      <h1 class="title">Recetas</h1>
+      <div class="spacer"></div>
+      <button class="buttonAdd" nz-button (click)="showModal(undefined)" *ngIf="isAdmin">
+        <fa-icon [icon]="addIcon"></fa-icon>
+        Añadir Receta
+      </button>
+    </div>
+  
+      <nz-table #tablaRecetas [nzData]="datosTabla" [nzPageSize]="7" [nzScroll]="{ y: '450px' }">
+          <thead>
+            <tr>
+              <th nzWidth="100px">NOMBRE
+                <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                  <fa-icon class="buscarIcon" [icon]="buscarIcon"></fa-icon>
+                </nz-filter-trigger>
+              </th>
+              <th nzWidth="50px">COCINAR</th>
+              <th nzWidth="50px" *ngIf="isAdmin">EDITAR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tablaRecetas.data">
+              <td>
+                {{ item.nombre }}
+              </td>
+              <td class="tableHover"
+              (click)="showReceta(item)"
+              >
+                <fa-icon class="tableIcon" [icon]="cookIcon"></fa-icon>
+              </td>
+              <td class="tableHover" *ngIf="isAdmin" (click)="showModal(item)">
+                <fa-icon class="tableIcon" [icon]="editIcon"></fa-icon>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+  
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <div class="ant-table-filter-dropdown">
+            <div class="search-box">
+              <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+              <button nz-button nzSize="small" (click)="search()" class="search-button">Buscar</button>
+              <button nz-button nzSize="small" (click)="reset()">Limpiar</button>
+            </div>
+          </div>
+        </nz-dropdown-menu>
+  </body>  

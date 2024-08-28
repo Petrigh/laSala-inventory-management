@@ -1,0 +1,37 @@
+<article class="recepieGrid" *ngIf="receta.nombre">
+    <main class="data">
+
+        <nz-table #ingredientesTable [nzData]="ingReceta" [nzPageSize]="3">
+            <thead>
+              <tr>
+                <th nzWidth="auto">INGREDIENTE</th>
+                <th nzWidth="auto">CANTIDAD</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ingReceta">
+                <td>
+                    <div style="display: grid; grid-template: 16px / auto 12px;">
+                        {{ item.bien.nombre }}
+                    </div>
+                </td>
+                <td>
+                    {{ item.cantidad }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+    
+    </main>
+    <aside class="description">
+        <div class="form-item">
+                <h3 class="form-label">Rinde&nbsp;&nbsp;</h3>
+                <div class="form-control">
+                    <span><b>{{ receta.producto.cantidad }}&nbsp;unidades</b></span>
+                </div>
+        </div>
+        <hr>
+        <h3 class="form-label">Descripcion</h3>
+        <div class="descripcion">{{ receta.descripcion }}</div>
+    </aside>
+</article>

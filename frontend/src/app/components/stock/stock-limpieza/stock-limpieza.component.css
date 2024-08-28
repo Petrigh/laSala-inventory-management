@@ -2,7 +2,111 @@ body {
     background-color: #bdd2c4;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin: 0;
-    padding: 20px;
+    padding: 160px;
   }
+  
+  tr th{
+    background-color: #395144;
+    color: #F0EBCE;
+    white-space: nowrap;
+    text-align: center;
+  }
+  
+  .buscarIcon{
+    color: #8a6a44;
+    font-size: 16px;
+  }
+  
+  .buscarIcon:hover{
+    color:orange
+  }
+  
+  tr td{
+    text-align: center;
+    border-right: 1px solid #f1ecec;
+  }
+  
+  tr td:last-child{
+    border-right: none;
+  }
+  
+  .header-container {
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }  
+  
+  .title {
+    margin: 0;
+    color: #395144;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+    
+  
+  .spacer {
+    flex-grow: 1;
+  }
+  
+    
+  
+  .buttonAdd {
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido al extremo derecho */
+    margin-bottom: 7px; /* Espacio entre el botón y la tabla */
+    margin-left: auto;
+    background-color: #8a6a44 !important;
+    border-color: #8a6a44 !important;
+    color: #F0EBCE !important;
+  }
+  
+  
+  
+  .tableHover{
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  
+  
+  .tableHover:hover{
+    cursor: pointer;
+  }
+  
+  .tableHover:hover > .tableIcon{
+    color: orange;
+  }
+
+  .tableIcon{
+    color: #8a6a44;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .search-box {
+    padding: 8px;
+  }
+  
+  .search-box input {
+    width: 188px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .search-box button {
+    width: 90px;
+  }
+  
+  .search-button {
+    margin-right: 8px;
+    background-color: #8a6a44;
+    border-color: #8a6a44;
+    color: #F0EBCE;
+  }
+  

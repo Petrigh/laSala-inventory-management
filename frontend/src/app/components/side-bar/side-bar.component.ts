@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBook, faDollar, faLayerGroup, faClipboardCheck, faUsers, faBroom, faJarWheat, faAppleWhole } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faPlantWilt,faLayerGroup, faUsers, faBroom, faJarWheat, faAppleWhole, faTruck } from '@fortawesome/free-solid-svg-icons';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { UserService } from '../../services/user.service';
 
@@ -15,14 +15,15 @@ import { UserService } from '../../services/user.service';
 })
 export class SideBarComponent implements OnInit{
   recetasIcon = faBook;
-  ventasIcon = faDollar;
   stockIcon = faLayerGroup;
     insumosIcon = faAppleWhole;
     limpiezaIcon = faBroom;
     productosIcon = faJarWheat;
-  actividadesIcon = faClipboardCheck;
+  familiaIcon = faPlantWilt;
+  canalIcon = faTruck;
   colaboradorxsIcon = faUsers;
 
+  toggles: Array<boolean> = [false, false];
   showStockList: boolean = false;
   isAdmin: boolean = false;
 
@@ -45,8 +46,9 @@ export class SideBarComponent implements OnInit{
     this.router.navigate([link]);
   }
 
-
-  toggleStock() {
-    this.showStockList = !this.showStockList;
+  toggleButton(index: number){
+    var val = this.toggles[index];
+    this.toggles.forEach((value,index)=> this.toggles[index] = false);
+    this.toggles[index] = !val;
   }
 }

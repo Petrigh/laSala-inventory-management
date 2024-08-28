@@ -61,3 +61,30 @@ fa-icon{
     color: #8a6a44;
     font-size: 20px;
 }
+
+
+
+.search-box {
+    padding: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid #8a6a44;
+    background-color: #84a486;
+  }
+
+  .search-box span{
+    color: #395144;
+    font-size: medium;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  
+  .search-button {
+    margin-right: 8px;
+    background-color: #8a6a44;
+    border-color: #8a6a44;
+    color: #F0EBCE;
+  }
+  

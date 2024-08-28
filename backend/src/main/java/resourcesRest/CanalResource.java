@@ -1,6 +1,7 @@
 package resourcesRest;
 
 import models.Canal;
+import models.Usuario;
 import persistance.interfaces.ICanal;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -52,6 +53,13 @@ public class CanalResource {
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
+    }
+    
+
+    @GET
+    @Path("/tipos")
+    public Response getTipoCanales() {
+        return Response.ok(Canal.Ubicacion.values()).build();
     }
 }
 
