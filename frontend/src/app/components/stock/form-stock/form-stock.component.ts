@@ -67,8 +67,8 @@ export class FormStockComponent {
     if(bien.id){
       this.stock.id = bien.id;      
     }
-    this.stock.cantidad = +bien.cantidad;
-    this.stock.precioUnitario = +bien.precioUnitario;
+    this.stock.cantidad = Number(bien.cantidad);
+    this.stock.precioUnitario = Number(bien.precioUnitario);
     this.stock.tipo = bien.tipo;
     return this.stock;
   }

@@ -38,7 +38,7 @@ export class FormCanalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.canalService.getTipoCanales().subscribe((tipos) =>  {console.log(tipos); this.tipos = tipos});
+    this.canalService.getTipoCanales().subscribe((tipos) =>  this.tipos = tipos);
   }
 
   submitForm(): Channel {

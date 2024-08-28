@@ -146,10 +146,8 @@ export class FormRecetaComponent implements OnInit {
     }
     this.receta.descripcion = rec.descripcion;
     const prod = this.productos.find(prod => prod.id === rec.producto);
-    console.log(prod)
     if(prod){
       prod.cantidad = rec.cantidadProd;
-      console.log(prod)
       this.receta.producto = prod;
     }
     this.receta.ingredientes = rec.ingredientes.map((ingrediente: any) => ({

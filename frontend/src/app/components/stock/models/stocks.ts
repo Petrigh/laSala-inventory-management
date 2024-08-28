@@ -18,7 +18,7 @@ export class Stock implements BienStock{
     constructor(obj: any){
         this.id = obj?.id;
         this.nombre = obj?.nombre;
-        this.cantidad = obj?.cantidad;
+        this.cantidad = obj?.cantidad || 0;
         this.tipo = obj?.tipo;
         this.precioUnitario = obj?.precioUnitario;
     }
